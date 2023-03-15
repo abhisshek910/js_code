@@ -59,13 +59,15 @@
       }
     }
 
-    function expandnodes(root, high) {
-      root.children.forEach((children) => {
-        if (high.includes(children.name)) {
-          click(children);
-          update(root);
-        }
-      });
+    function expandnodes(node) {
+      if (high.includes(node.name)) {
+        click(node);
+      }
+      if (node.children) {
+        node.children.forEach(expandnodes);
+      } else if (node._children) {
+        node._children.forEach(expandnodes);
+      }
     }
 
     function jsonldTree(source) {
@@ -129,7 +131,7 @@
       if (children.length) {
         tree.children = children;
       }
-      console.log(tree);
+
       return tree;
     }
 
